@@ -3,15 +3,16 @@
     <template #title>
       コード読み取り
     </template>
-    <VAlert v-model="hasErrorMessage" color="error">
-      {{ errorMessage }}
-    </VAlert>
     <QrcodeStream :camera="camera" @decode="onDecode" @init="onInit" />
-    <VDialog v-model="done">
-      <VCard>
+    <VDialog v-model="checked">
+      <VAlert v-model="hasErrorMessage" color="error">
+        {{ errorMessage }}
+      </VAlert>
+      <VCard :loading="loading">
         <VCardTitle>ポイントを利用しますか？</VCardTitle>
         <VCardText>
-          {{ token }}
+          {{ nonce }}
+          {{ ticket?.price }}ポイント
         </VCardText>
         <VCardActions>
           <VBtn xlarge color="secondary" @click="cancel">
@@ -24,28 +25,58 @@
         </VCardActions>
       </VCard>
     </VDialog>
+    <VDialog v-model="done">
+      <VCard>
+        <VCardTitle class="mx-auto pa-4">
+          <VIcon icon="mdi-check-circle-outline" color="success" class="mr-2" size="x-large" />
+          完了!
+        </VCardTitle>
+      </VCard>
+    </VDialog>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { QrcodeStream } from 'vue-qrcode-reader'
+import { PointTicketResponse } from '~~/types/shop'
 
+const config = useRuntimeConfig()
+const { token } = useAuth()
+
+const checked: Ref<boolean> = ref(false)
+const loading: Ref<boolean> = ref(false)
 const done: Ref<boolean> = ref(false)
-const token: Ref<string> = ref('')
+const nonce: Ref<string> = ref('')
 
 const hasErrorMessage: Ref<boolean> = ref(false)
 const errorMessage: Ref<string> = ref('')
 
 const camera: Ref<string> = ref('auto')
+const ticket:Ref<PointTicketResponse|null> = ref(null)
 
 definePageMeta({
   middleware: ['auth']
 })
 
-function onDecode (decodedString: string) {
-  token.value = decodedString
+async function onDecode (decodedString: string) {
+  nonce.value = decodedString
   pause()
-  done.value = true
+  // 有効性チェック
+  const { data, error } = await useFetch<PointTicketResponse|null>(config.API_ENDPOINT + '/shop/pointticket?nonce=' + decodedString, {
+    headers: {
+      authorization: `Bearer ${token.value}`
+    },
+    watch: [token],
+    default: defaultTicket
+  })
+  if (error.value !== null) {
+    errorMessage.value = error.value?.message
+    hasErrorMessage.value = true
+  } else {
+    ticket.value = data.value
+    hasErrorMessage.value = false
+  }
+  checked.value = true
 }
 
 async function onInit (promise: Promise<void>) {
@@ -82,12 +113,31 @@ function pause () {
 }
 
 function cancel () {
-  done.value = false
   unpause()
+  checked.value = false
 }
+const defaultTicket = () => ({
+  price: 0
+})
 
-function exchange () {
-  done.value = false
+async function exchange () {
   unpause()
+
+  loading.value = true
+  const { data } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
+    headers: {
+      authorization: `Bearer ${token.value}`
+    },
+    method: 'POST',
+    watch: [token],
+    default: defaultTicket,
+    body: { nonce: nonce.value }
+  })
+  loading.value = false
+  checked.value = false
+  done.value = true
+  setTimeout(() => {
+    // done.value = false
+  }, 10000)
 }
 </script>

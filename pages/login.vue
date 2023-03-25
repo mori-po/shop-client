@@ -15,9 +15,15 @@
           </VBtn>
         </div>
         <VDivider />
-        <div class="signup-form ma-4">
+        <div class="ma-4">
           <VBtn block size="large" min-height="50" @click="signedInGoogle">
             <VIcon icon="mdi-google" class="mr-1" />ログイン
+          </VBtn>
+        </div>
+        <VDivider />
+        <div class="ma-4">
+          <VBtn block size="large" min-height="50">
+            <VIcon icon="mdi-google" class="mr-1" />新規登録
           </VBtn>
         </div>
       </VCard>
@@ -56,4 +62,5 @@ const signedInGoogle = () => {
     errorMessage.value = e.toString()
   })
 }
+
 </script>
