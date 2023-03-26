@@ -38,6 +38,4 @@ const { data: histories } = await useFetch<Array<Ticket>>(config.API_ENDPOINT + 
   },
   watch: [token]
 })
-console.log(histories.value)
-
 </script>
