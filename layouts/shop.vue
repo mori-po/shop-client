@@ -13,8 +13,8 @@
         <VAppBarTitle>
           <slot name="title" />
         </VAppBarTitle>
-        <VBtn>
-          <VIcon icon="mdi-account" class="mr-1" /><span>{{ accountName }}</span>
+        <VBtn class="mx-1">
+          <VIcon :icon="shop?.icon" class="mr-1" /><span>{{ shop?.name }}</span>
         </VBtn>
         <VAppBarNavIcon icon="mdi-logout" @click="signOut" />
       </VAppBar>
@@ -46,8 +46,21 @@
 
 <script setup lang="ts">
 import { useAuth } from '~~/composables/useAuth'
-
-const accountName = useState('accountName', () => 'No User')
+import { ShopResponse } from '~~/types/shop'
+const { token } = useAuth()
+const config = useRuntimeConfig()
+const defaultShop = () => ({
+  id: 0,
+  name: 'None User',
+  icon: 'mdi-account'
+})
+const { data: shop } = await useFetch<ShopResponse>(config.API_ENDPOINT + '/shop', {
+  headers: {
+    authorization: `Bearer ${token.value}`
+  },
+  watch: [token],
+  default: defaultShop
+})
 
 const signOut = () => {
   const { signOut } = useAuth()
