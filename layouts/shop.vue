@@ -19,7 +19,7 @@
         <VAppBarNavIcon icon="mdi-logout" @click="signOut" />
       </VAppBar>
       <VMain>
-        <VContainer>
+        <VContainer class="h-100">
           <slot />
         </VContainer>
       </VMain>
@@ -38,7 +38,9 @@
         </VBtn>
       </VBottomNavigation>
       <VFooter app class="justify-center">
-        © 2023 Moripo.
+        <a href="https://sites.google.com/view/moripo/home">
+          © 2023 Moripo.
+        </a>
       </VFooter>
     </ClientOnly>
   </VApp>
