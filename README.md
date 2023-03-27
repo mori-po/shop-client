@@ -6,6 +6,16 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 ## Setup
 
+
+.env
+
+```
+FIREBASE_API_KEY=認証用のFirebase APIキー
+FIREBASE_AUTH_DOMAIN=認証ドメイン
+FIREBASE_PROJECT_ID=FirebaseプロジェクトID
+API_ENDPOINT=APIのエンドポイント
+```
+
 Make sure to install the dependencies:
 
 ```bash
