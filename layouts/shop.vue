@@ -47,22 +47,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth } from '~~/composables/useAuth'
-import { ShopResponse } from '~~/types/shop'
-const { token } = useAuth()
-const config = useRuntimeConfig()
-const defaultShop = () => ({
-  id: 0,
-  name: 'None User',
-  icon: 'mdi-account'
-})
-const { data: shop } = await useFetch<ShopResponse>(config.API_ENDPOINT + '/shop', {
-  headers: {
-    authorization: `Bearer ${token.value}`
-  },
-  watch: [token],
-  default: defaultShop
-})
+import { useUser } from '~~/composables/useUser'
+const { user: shop } = useUser()
 
 const signOut = () => {
   const { signOut } = useAuth()
