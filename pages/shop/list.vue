@@ -34,7 +34,7 @@ const config = useRuntimeConfig()
 
 const { data: histories } = await useFetch<Array<Ticket>>(config.API_ENDPOINT + '/shop/pointticket/history', {
   headers: {
-    authorization: `Bearer ${token.value}`
+    authorization: `${token.value}`
   },
   watch: [token]
 })

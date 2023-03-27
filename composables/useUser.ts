@@ -11,7 +11,7 @@ export const useUser = () => {
     if (token) {
       const { data } = await useFetch<ShopResponse>(config.API_ENDPOINT + '/shop', {
         headers: {
-          authorization: `Bearer ${token.value}`
+          authorization: `${token.value}`
         },
         watch: [token]
       })

@@ -64,7 +64,7 @@ async function onDecode (decodedString: string) {
   // 有効性チェック
   const { data, error } = await useFetch<PointTicketResponse|null>(config.API_ENDPOINT + '/shop/pointticket?nonce=' + decodedString, {
     headers: {
-      authorization: `Bearer ${token.value}`
+      authorization: `${token.value}`
     },
     watch: [token],
     default: defaultTicket
@@ -126,7 +126,7 @@ async function exchange () {
   loading.value = true
   const { data } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
     headers: {
-      authorization: `Bearer ${token.value}`
+      authorization: `${token.value}`
     },
     method: 'POST',
     watch: [token],
