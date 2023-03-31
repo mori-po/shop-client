@@ -3,16 +3,17 @@
     <template #title>
       コード読み取り
     </template>
-    <QrcodeStream :camera="camera" @decode="onDecode" @init="onInit" />
+    <ClientOnly>
+      <QrcodeStream :camera="camera" @decode="onDecode" @init="onInit" />
+    </ClientOnly>
     <VDialog v-model="checked">
       <VAlert v-model="hasErrorMessage" color="error">
         {{ errorMessage }}
       </VAlert>
       <VCard :loading="loading">
-        <VCardTitle>ポイントを利用しますか？</VCardTitle>
+        <VCardTitle>もりポを利用しますか？</VCardTitle>
         <VCardText>
-          {{ nonce }}
-          {{ ticket?.price }}ポイント
+          {{ ticket?.price ?? '-' }} もりポ
         </VCardText>
         <VCardActions>
           <VBtn xlarge color="secondary" @click="cancel">
@@ -124,7 +125,7 @@ async function exchange () {
   unpause()
 
   loading.value = true
-  const { data } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
+  const { error } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
     headers: {
       authorization: `${token.value}`
     },
@@ -133,11 +134,17 @@ async function exchange () {
     default: defaultTicket,
     body: { nonce: nonce.value }
   })
-  loading.value = false
-  checked.value = false
-  done.value = true
-  setTimeout(() => {
-    // done.value = false
-  }, 10000)
+  if (error.value !== null) {
+    errorMessage.value = error.value?.message
+    hasErrorMessage.value = true
+  } else {
+    hasErrorMessage.value = false
+    loading.value = false
+    checked.value = false
+    done.value = true
+    setTimeout(() => {
+      done.value = false
+    }, 10000)
+  }
 }
 </script>
