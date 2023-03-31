@@ -10,10 +10,10 @@
             {{ history?.pointVoucher?.event_name }}
           </VCardTitle>
           <VCardSubtitle>
-            {{ dayjs(history?.used_at ?? 0).format('YYYY/MM/DD hh:mm:ss') }}
+            {{ dayjs.unix(history?.used_at ?? 0).format('YYYY/MM/DD hh:mm:ss') }}
           </VCardSubtitle>
           <VCardText>
-            {{ history?.amount }}ポイント
+            {{ history?.amount }}もりポ
           </VCardText>
         </VCard>
       </VListItem>
