@@ -5,7 +5,19 @@
     </template>
     <VCard class="my-4">
       <VCardTitle>利用もりポ</VCardTitle>
-      <VCardText>{{ usedPoint }} もりポ</VCardText>
+      <VCardText>
+        <VRow no-gutters>
+          <VCol
+            align-self="center"
+            class="text-right"
+            cols="12"
+          >
+            <VLabel class="text-h3">
+              {{ usedPoint }}
+            </VLabel>もりポ
+          </VCol>
+        </VRow>
+      </VCardText>
     </VCard>
   </NuxtLayout>
 </template>
