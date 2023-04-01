@@ -26,7 +26,7 @@ const usedPoint = await useFetch<Array<Ticket>>(config.API_ENDPOINT + '/shop/poi
   },
   watch: [token]
 }).then((data) => {
-  return data.data.value?.map(a => a.amount).reduce((a, b) => a + b)
+  return data.data.value?.map(a => a.amount).reduce((a, b) => a + b, 0)
 })
 
 </script>
