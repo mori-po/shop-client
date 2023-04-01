@@ -61,6 +61,9 @@ const { data: histories } = await useFetch<Array<Ticket>>(config.API_ENDPOINT + 
     authorization: `${token.value}`
   },
   watch: [token]
+}).then((data) => {
+  data.data.value = data.data.value?.sort((a, b) => (b.used_at ?? 0) - (a.used_at ?? 0)) ?? null
+  return data
 })
 </script>
 <style lang="scss" scoped>
