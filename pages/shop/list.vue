@@ -18,6 +18,9 @@
         </VCard>
       </VListItem>
     </VList>
+    <VAlert v-show="(histories?.length ?? 0) == 0" color="warning">
+      まだQRコードが読み取られていません。
+    </VAlert>
   </NuxtLayout>
 </template>
 
