@@ -4,7 +4,7 @@
       店舗
     </template>
     <VCard class="my-4">
-      <VCardTitle>利用もりポ</VCardTitle>
+      <VCardTitle>累積利用もりポ</VCardTitle>
       <VCardText>
         <VRow no-gutters>
           <VCol
