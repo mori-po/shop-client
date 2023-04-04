@@ -10,7 +10,7 @@
             {{ history?.pointVoucher?.event_name }}
           </VCardTitle>
           <VCardSubtitle>
-            {{ dayjs.unix(history?.used_at ?? 0).format('YYYY/MM/DD hh:mm:ss') }}
+            {{ dayjs.unix(history?.used_at ?? 0).format('YYYY/MM/DD HH:mm:ss') }}
           </VCardSubtitle>
           <VCardText>
             <VRow no-gutters>
