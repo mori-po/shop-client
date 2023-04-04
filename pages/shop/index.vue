@@ -5,7 +5,19 @@
     </template>
     <VCard class="my-4">
       <VCardTitle>利用もりポ</VCardTitle>
-      <VCardText>{{ usedPoint }} もりポ</VCardText>
+      <VCardText>
+        <VRow no-gutters>
+          <VCol
+            align-self="center"
+            class="text-right"
+            cols="12"
+          >
+            <VLabel class="text-h3">
+              {{ usedPoint }}
+            </VLabel>もりポ
+          </VCol>
+        </VRow>
+      </VCardText>
     </VCard>
   </NuxtLayout>
 </template>
@@ -26,7 +38,7 @@ const usedPoint = await useFetch<Array<Ticket>>(config.API_ENDPOINT + '/shop/poi
   },
   watch: [token]
 }).then((data) => {
-  return data.data.value?.map(a => a.amount).reduce((a, b) => a + b)
+  return data.data.value?.map(a => a.amount).reduce((a, b) => a + b, 0)
 })
 
 </script>
