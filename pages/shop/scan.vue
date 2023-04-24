@@ -4,7 +4,12 @@
       コード読み取り
     </template>
     <ClientOnly>
-      <QrcodeStream :camera="camera" @decode="onDecode" @init="onInit" />
+      <QrcodeStream v-if="camera == 'auto'" :camera="camera" @decode="onDecode" @init="onInit" />
+      <div class="d-flex justify-center align-center h-100">
+        <VBtn v-if="camera == 'off'" xlarge class="pa-3 ma-auto" @click="unpause">
+          <VIcon icon="mdi-qrcode-scan" />カメラ起動
+        </VBtn>
+      </div>
     </ClientOnly>
     <VDialog v-model="checked">
       <VAlert v-model="hasErrorMessage" color="error">
@@ -42,7 +47,7 @@ import { QrcodeStream } from 'vue-qrcode-reader'
 import { PointTicketResponse } from '~~/types/shop'
 
 const config = useRuntimeConfig()
-const { token } = useAuth()
+const { token, checkAuthState } = useAuth()
 
 const checked: Ref<boolean> = ref(false)
 const loading: Ref<boolean> = ref(false)
@@ -107,6 +112,10 @@ async function onInit (promise: Promise<void>) {
 
 function unpause () {
   camera.value = 'auto'
+  // 自動ポーズ再設定
+  resetAutoPause()
+  // トークンチェック
+  checkAuthState()
 }
 
 function pause () {
@@ -147,4 +156,22 @@ async function exchange () {
     }, 10000)
   }
 }
+
+let timer = autoPause()
+
+// 自動ポーズ
+function autoPause () {
+  return setTimeout(() => {
+    pause()
+  }, 60 * 1000)
+}
+
+// 自動ポーズ再設定
+function resetAutoPause () {
+  if (timer) {
+    clearTimeout(timer)
+  }
+  timer = autoPause()
+}
+
 </script>
