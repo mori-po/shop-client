@@ -4,12 +4,14 @@
       コード読み取り
     </template>
     <ClientOnly>
-      <QrcodeStream v-if="camera == 'auto'" :camera="camera" @decode="onDecode" @init="onInit" />
-      <div class="d-flex justify-center align-center h-100">
-        <VBtn v-if="camera == 'off'" xlarge class="pa-3 ma-auto" @click="unpause">
-          <VIcon icon="mdi-qrcode-scan" />カメラ起動
-        </VBtn>
-      </div>
+      <QrcodeStream :camera="camera" @decode="onDecode" @init="onInit">
+        <div v-if="camera=='off'" class="d-flex justify-center align-center h-100">
+          <VProgressCircular v-if="loading" indeterminate color="primary" size="50" class="d-block" />
+          <VBtn v-if="!loading" xlarge class="pa-3" @click="unpause">
+            <VIcon icon="mdi-qrcode-scan" />カメラ起動
+          </VBtn>
+        </div>
+      </QrcodeStream>
     </ClientOnly>
     <VDialog v-model="checked">
       <VAlert v-model="hasErrorMessage" color="error">
@@ -66,6 +68,7 @@ definePageMeta({
 
 async function onDecode (decodedString: string) {
   nonce.value = decodedString
+  loading.value = true
   pause()
   // 有効性チェック
   const { data, error } = await useFetch<PointTicketResponse|null>(config.API_ENDPOINT + '/shop/pointticket?nonce=' + decodedString, {
@@ -82,6 +85,7 @@ async function onDecode (decodedString: string) {
     ticket.value = data.value
     hasErrorMessage.value = false
   }
+  loading.value = false
   checked.value = true
 }
 
@@ -148,13 +152,13 @@ async function exchange () {
     hasErrorMessage.value = true
   } else {
     hasErrorMessage.value = false
-    loading.value = false
     checked.value = false
     done.value = true
     setTimeout(() => {
       done.value = false
     }, 10000)
   }
+  loading.value = false
 }
 
 let timer = autoPause()
