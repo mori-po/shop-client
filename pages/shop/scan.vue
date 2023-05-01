@@ -27,7 +27,7 @@
             <VIcon icon="mdi-sync-circle" />キャンセル
           </VBtn>
           <VSpacer />
-          <VBtn xlarge @click="exchange">
+          <VBtn v-if="!hasErrorMessage" xlarge @click="exchange">
             <VIcon icon="mdi-sync-circle" />利用する
           </VBtn>
         </VCardActions>
@@ -46,6 +46,7 @@
 
 <script setup lang="ts">
 import { QrcodeStream } from 'vue-qrcode-reader'
+import { getErrorMessage } from '~~/types/error'
 import { PointTicketResponse } from '~~/types/shop'
 
 const config = useRuntimeConfig()
@@ -79,8 +80,9 @@ async function onDecode (decodedString: string) {
     default: defaultTicket
   })
   if (error.value !== null) {
-    errorMessage.value = error.value?.message
+    const err = await error.value.data
     hasErrorMessage.value = true
+    errorMessage.value = getErrorMessage(err)
   } else {
     ticket.value = data.value
     hasErrorMessage.value = false
@@ -148,7 +150,8 @@ async function exchange () {
     body: { nonce: nonce.value }
   })
   if (error.value !== null) {
-    errorMessage.value = error.value?.message
+    const err = error.value.data
+    errorMessage.value = getErrorMessage(err)
     hasErrorMessage.value = true
   } else {
     hasErrorMessage.value = false

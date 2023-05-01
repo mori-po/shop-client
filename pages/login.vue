@@ -29,7 +29,7 @@ const email: Ref<string> = ref('')
 const pass: Ref<string> = ref('')
 const errorMessage: Ref<string | undefined> = ref(undefined)
 const hasErrorMessage: Ref<boolean> = ref(false)
-const { signIn } = useAuth()
+const { signIn, getErrorMessage } = useAuth()
 const { getUser } = useUser()
 const signedIn = () => {
   signIn(email.value, pass.value).then(async () => {
@@ -37,7 +37,7 @@ const signedIn = () => {
     return await navigateTo('/shop')
   }).catch((e) => {
     hasErrorMessage.value = true
-    errorMessage.value = e.toString()
+    errorMessage.value = getErrorMessage(e)
   })
 }
 

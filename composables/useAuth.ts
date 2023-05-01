@@ -1,3 +1,4 @@
+import { FirebaseError } from 'firebase/app'
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -95,11 +96,27 @@ export const useAuth = () => {
     })
   }
 
+  function getErrorMessage (error: FirebaseError) {
+    if (error.code === 'auth/wrong-password') {
+      return 'メールアドレスかパスワードが違います。'
+    } else if (error.code === 'auth/missing-email') {
+      return 'メールアドレスが入力されていません。'
+    } else if (error.code === 'auth/user-not-found') {
+      return 'メールアドレスかパスワードが違います。'
+    } else if (error.code === 'auth/internal-error') {
+      return 'メールアドレスかパスワードが違います。'
+    } else if (error.code === 'auth/too-many-requests') {
+      return 'ログイン試行回数が多すぎます。しばらく待ってからお試しください。'
+    }
+    return ''
+  }
+
   return {
     signIn,
     signInGoogle,
     signOut,
     token,
-    checkAuthState
+    checkAuthState,
+    getErrorMessage
   }
 }
