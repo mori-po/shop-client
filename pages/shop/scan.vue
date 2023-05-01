@@ -80,9 +80,8 @@ async function onDecode (decodedString: string) {
     default: defaultTicket
   })
   if (error.value !== null) {
-    const err = await error.value.data
     hasErrorMessage.value = true
-    errorMessage.value = getErrorMessage(err)
+    errorMessage.value = getErrorMessage(error.value.data)
   } else {
     ticket.value = data.value
     hasErrorMessage.value = false
@@ -150,8 +149,7 @@ async function exchange () {
     body: { nonce: nonce.value }
   })
   if (error.value !== null) {
-    const err = error.value.data
-    errorMessage.value = getErrorMessage(err)
+    errorMessage.value = getErrorMessage(error.value.data)
     hasErrorMessage.value = true
   } else {
     hasErrorMessage.value = false
