@@ -8,7 +8,7 @@ export const mainTheme: ThemeDefinition = {
   colors: {
     background: '#FFFFFF',
     surface: '#FFFFFF',
-    primary: '#176146',
+    primary: '#176043',
     secondary: '#419A6D',
     error: '#ef4444',
     info: '#3b82f6',
