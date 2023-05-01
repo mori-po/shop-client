@@ -136,8 +136,6 @@ const defaultTicket = () => ({
 })
 
 async function exchange () {
-  unpause()
-
   loading.value = true
   const { error } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
     headers: {
@@ -158,6 +156,7 @@ async function exchange () {
     setTimeout(() => {
       done.value = false
     }, 10000)
+    unpause()
   }
   loading.value = false
 }
