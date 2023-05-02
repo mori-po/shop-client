@@ -27,7 +27,7 @@
             <VIcon icon="mdi-sync-circle" />キャンセル
           </VBtn>
           <VSpacer />
-          <VBtn xlarge @click="exchange">
+          <VBtn v-if="!hasErrorMessage" xlarge @click="exchange">
             <VIcon icon="mdi-sync-circle" />利用する
           </VBtn>
         </VCardActions>
@@ -46,6 +46,7 @@
 
 <script setup lang="ts">
 import { QrcodeStream } from 'vue-qrcode-reader'
+import { getErrorMessage } from '~~/types/error'
 import { PointTicketResponse } from '~~/types/shop'
 
 const config = useRuntimeConfig()
@@ -79,8 +80,8 @@ async function onDecode (decodedString: string) {
     default: defaultTicket
   })
   if (error.value !== null) {
-    errorMessage.value = error.value?.message
     hasErrorMessage.value = true
+    errorMessage.value = getErrorMessage(error.value.data)
   } else {
     ticket.value = data.value
     hasErrorMessage.value = false
@@ -135,8 +136,6 @@ const defaultTicket = () => ({
 })
 
 async function exchange () {
-  unpause()
-
   loading.value = true
   const { error } = await useFetch(config.API_ENDPOINT + '/shop/pointticket', {
     headers: {
@@ -148,7 +147,7 @@ async function exchange () {
     body: { nonce: nonce.value }
   })
   if (error.value !== null) {
-    errorMessage.value = error.value?.message
+    errorMessage.value = getErrorMessage(error.value.data)
     hasErrorMessage.value = true
   } else {
     hasErrorMessage.value = false
@@ -157,6 +156,7 @@ async function exchange () {
     setTimeout(() => {
       done.value = false
     }, 10000)
+    unpause()
   }
   loading.value = false
 }
