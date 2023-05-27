@@ -18,7 +18,7 @@
         <VContainer class="h-100 moripo_background">
           <div class="pa-4">
             <VImg
-              src="/background_moripo_logo_margin.png"
+              src="/top_logo.png"
               class="ma-auto"
               max-height="150"
               max-width="300"
