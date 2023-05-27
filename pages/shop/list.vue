@@ -21,7 +21,7 @@
               >
                 <VImg
                   :src="history?.pointVoucher.event_image"
-                  lazy-src="/moripo-icon.jpg"
+                  lazy-src="/icon.jpg"
                   class="event-image"
                 />
               </VCol>

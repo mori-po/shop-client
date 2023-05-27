@@ -3,7 +3,7 @@
     <ClientOnly>
       <VAppBar :elevation="2">
         <VImg
-          src="/moripo-icon.jpg"
+          src="/icon.jpg"
           class="ml-2"
           max-height="40"
           max-width="40"
