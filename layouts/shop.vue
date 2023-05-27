@@ -38,8 +38,8 @@
         </VBtn>
       </VBottomNavigation>
       <VFooter app class="justify-center">
-        <a href="https://sites.google.com/view/moripo/home">
-          © 2023 Moripo.
+        <a :href="config.CUSTOM_WEBSITE_URL">
+          {{ config.CUSTOM_COPYRIGHT }}
         </a>
       </VFooter>
     </ClientOnly>
@@ -48,6 +48,7 @@
 
 <script setup lang="ts">
 import { useUser } from '~~/composables/useUser'
+const config = useRuntimeConfig()
 const { user: shop } = useUser()
 
 const signOut = () => {

@@ -32,7 +32,7 @@
               >
                 <VLabel class="text-h3">
                   {{ history?.amount }}
-                </VLabel>もりポ
+                </VLabel>{{ config.public.CUSTOM_POINT_UNIT }}
               </VCol>
             </VRow>
           </VCardText>

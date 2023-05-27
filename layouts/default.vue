@@ -28,14 +28,16 @@
         </VContainer>
       </VMain>
       <VFooter app class="justify-center">
-        <a href="https://sites.google.com/view/moripo/home">
-          © 2023 Moripo.
+        <a :href="config.CUSTOM_WEBSITE_URL">
+          {{ config.CUSTOM_COPYRIGHT }}
         </a>
       </VFooter>
     </ClientOnly>
   </VApp>
 </template>
-
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 <style  lang="scss" scoped>
 .background {
   background: url("/background_1120_1120.jpg");

@@ -4,7 +4,7 @@
       店舗
     </template>
     <VCard class="my-4">
-      <VCardTitle>利用もりポ</VCardTitle>
+      <VCardTitle>利用{{ config.public.CUSTOM_POINT_NAME }}</VCardTitle>
       <VCardText>
         <VRow no-gutters>
           <VCol
@@ -14,7 +14,7 @@
           >
             <VLabel class="text-h3">
               {{ usedPoint }}
-            </VLabel>もりポ
+            </VLabel>{{ config.public.CUSTOM_POINT_UNIT }}
           </VCol>
         </VRow>
       </VCardText>

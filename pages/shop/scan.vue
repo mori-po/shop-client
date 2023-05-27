@@ -18,9 +18,9 @@
         {{ errorMessage }}
       </VAlert>
       <VCard :loading="loading">
-        <VCardTitle>もりポを利用しますか？</VCardTitle>
+        <VCardTitle>{{ config.public.CUSTOM_POINT_NAME }}を利用しますか？</VCardTitle>
         <VCardText>
-          {{ ticket?.price ?? '-' }} もりポ
+          {{ ticket?.price ?? '-' }} {{ config.public.CUSTOM_POINT_UNIT }}
         </VCardText>
         <VCardActions>
           <VBtn xlarge color="secondary" @click="cancel">
