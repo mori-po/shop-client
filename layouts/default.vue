@@ -15,7 +15,7 @@
         </VAppBarTitle>
       </VAppBar>
       <VMain>
-        <VContainer class="h-100 moripo_background">
+        <VContainer class="h-100 background">
           <div class="pa-4">
             <VImg
               src="/top_logo.png"
@@ -37,7 +37,7 @@
 </template>
 
 <style  lang="scss" scoped>
-.moripo_background {
+.background {
   background: url("/background_1120_1120.jpg");
   @media screen and (max-width: 400px) {
     background: url("/background_400_900.jpg");
