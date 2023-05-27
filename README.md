@@ -22,6 +22,10 @@
   - release版がまだVue3対応していない。
   - Vue3対応されているPre-release版を利用。
 
+### for Deploy
+
+- Vercel
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
@@ -75,7 +79,12 @@ npm run preview
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
+# Deploy
+
+- Vercel Pro
+  - moripo Team
+  - mainブランチ
+
 # ユーザー新規登録
 
-以下を参照
-https://github.com/mori-po/service-backend/blob/develop/README.md
+[service-backend](https://github.com/mori-po/service-backend/blob/develop/README.md)を参照
