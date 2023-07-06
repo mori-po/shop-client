@@ -3,7 +3,7 @@
     <ClientOnly>
       <VAppBar :elevation="2">
         <VImg
-          src="/moripo-icon.jpg"
+          src="/icon.jpg"
           class="ml-2"
           max-height="40"
           max-width="40"
@@ -15,10 +15,10 @@
         </VAppBarTitle>
       </VAppBar>
       <VMain>
-        <VContainer class="h-100 moripo_background">
+        <VContainer class="h-100 background">
           <div class="pa-4">
             <VImg
-              src="/background_moripo_logo_margin.png"
+              src="/top_logo.png"
               class="ma-auto"
               max-height="150"
               max-width="300"
@@ -28,16 +28,18 @@
         </VContainer>
       </VMain>
       <VFooter app class="justify-center">
-        <a href="https://sites.google.com/view/moripo/home">
-          © 2023 Moripo.
+        <a :href="config.CUSTOM_WEBSITE_URL">
+          {{ config.CUSTOM_COPYRIGHT }}
         </a>
       </VFooter>
     </ClientOnly>
   </VApp>
 </template>
-
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 <style  lang="scss" scoped>
-.moripo_background {
+.background {
   background: url("/background_1120_1120.jpg");
   @media screen and (max-width: 400px) {
     background: url("/background_400_900.jpg");

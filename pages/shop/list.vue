@@ -21,7 +21,7 @@
               >
                 <VImg
                   :src="history?.pointVoucher.event_image"
-                  lazy-src="/moripo-icon.jpg"
+                  lazy-src="/icon.jpg"
                   class="event-image"
                 />
               </VCol>
@@ -32,7 +32,7 @@
               >
                 <VLabel class="text-h3">
                   {{ history?.amount }}
-                </VLabel>もりポ
+                </VLabel>{{ config.public.CUSTOM_POINT_UNIT }}
               </VCol>
             </VRow>
           </VCardText>
